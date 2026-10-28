@@ -1,0 +1,41 @@
+name: 部署到腾讯云 COS
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装 coscmd
+        run: pip install coscmd
+
+      - name: 配置 COS
+        env:
+          SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
+          SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
+          BUCKET: ${{ secrets.TENCENT_BUCKET }}
+          REGION: ${{ secrets.TENCENT_REGION }}
+        run: |
+          coscmd config -a "$SECRET_ID" -s "$SECRET_KEY" -b "$BUCKET" -r "$REGION"
+
+      - name: 上传页面与图片
+        run: |
+          set -e
+          coscmd upload index.html /
+          coscmd upload logo.png /
+          if [ -f qr.png ]; then coscmd upload qr.png /; fi
+          if [ -d icons ]; then coscmd upload -r icons/ icons/; fi
+
+      - name: 完成
+        run: echo "部署完成，若已开启 CDN 请刷新缓存"
