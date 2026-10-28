@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>汇享玩电竞 · 陪玩价目表</title>
+<style>
+  :root{
+    --orange:#FF8A3D;
+    --orange-deep:#F0611F;
+    --amber:#FFB347;
+    --cream:#FFF6EE;
+    --line:#FFE0C7;
+    --text:#5A3B2E;
+    --soft:#A9836F;
+    --white:#FFFFFF;
+    --shadow:0 8px 24px rgba(240,97,31,.10);
+    --shadow-hover:0 14px 32px rgba(240,97,31,.18);
+  }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    color:var(--text);
+    background:linear-gradient(180deg,#FFF9F3 0%,#FFEEDD 55%,#FFF6EE 100%);
+    min-height:100vh;
+    padding-bottom:40px;
+  }
+  .wrap{ width:100%; max-width:1040px; margin:0 auto; padding:0 16px; }
+
+  /* ===== 头部 ===== */
+  .hero{ text-align:center; padding:34px 16px 8px; position:relative; }
+  .logo-ring{
+    width:104px; height:104px; margin:0 auto 14px;
+    border-radius:50%; padding:4px;
+    background:linear-gradient(135deg,#FFC24B,#FF8A3D,#F0611F);
+    box-shadow:0 10px 26px rgba(240,97,31,.28);
+    animation:float 4s ease-in-out infinite;
+  }
+  .logo-ring img{ width:100%; height:100%; border-radius:50%; display:block; object-fit:cover; background:#fff; }
+  @keyframes float{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-7px); } }
+
+  h1{ margin:0; font-size:30px; font-weight:900; letter-spacing:2px; color:#E8541A; }
+  .sub{ margin:8px 0 0; font-size:12px; letter-spacing:3px; font-weight:700; color:var(--soft); }
+  .welcome{
+    display:inline-block; margin:16px auto 0; padding:9px 18px;
+    font-size:13px; font-weight:600; color:#B4562A;
+    background:rgba(255,255,255,.85); border:1px solid var(--line);
+    border-radius:999px; box-shadow:0 4px 12px rgba(240,97,31,.08);
+  }
+  .hero-btns{ display:flex; gap:12px; justify-content:center; margin-top:18px; flex-wrap:wrap; }
+  .btn{
+    border:none; cursor:pointer; font-family:inherit;
+    padding:12px 30px; border-radius:999px; font-size:14px; font-weight:800;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .btn:active{ transform:scale(.96); }
+  .btn-main{ color:#fff; background:linear-gradient(135deg,#FF9A4D,#F0611F); box-shadow:0 8px 20px rgba(240,97,31,.32); }
+  .btn-main:hover{ box-shadow:0 12px 26px rgba(240,97,31,.42); }
+  .btn-ghost{ color:#E8541A; background:#fff; border:2px solid var(--line); }
+  .btn-ghost:hover{ border-color:var(--orange); }
+
+  /* ===== 横幅 ===== */
+  .banners{ margin:22px 0 6px; }
+  .banner{
+    display:flex; align-items:center; gap:8px;
+    margin-bottom:10px; padding:13px 20px;
+    font-size:14px; font-weight:800; color:#fff;
+    border-radius:16px;
+    background:linear-gradient(90deg,#FF9A4D,#F0611F);
+    box-shadow:0 8px 18px rgba(240,97,31,.20);
+  }
+  .banner.alt{ background:linear-gradient(90deg,#FFB347,#EE7A1B); }
+  .banner small{
+    margin-left:auto; font-size:11px; font-weight:700;
+    padding:3px 10px; border-radius:999px; background:rgba(255,255,255,.24);
+  }
+
+  /* ===== 分类网格 ===== */
+  .grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:14px;
+    margin-top:16px;
+  }
+  @media (min-width:820px){ .grid{ grid-template-columns:repeat(3,1fr); gap:18px; } }
+
+  .card{
+    position:relative; cursor:pointer;
+    padding:20px 12px 16px; text-align:center;
+    background:var(--white);
+    border:2px solid var(--line); border-radius:20px;
+    box-shadow:var(--shadow);
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-hover); }
+  .card.active{ border-color:var(--orange); box-shadow:var(--shadow-hover); }
+  .card .ico{ width:66px; height:66px; display:block; margin:0 auto; }
+  .card .nm{ margin-top:8px; font-size:16px; font-weight:900; letter-spacing:.5px; }
+  .card .ds{ margin-top:4px; font-size:11px; font-weight:600; color:var(--soft); }
+  .corner{
+    position:absolute; top:10px; right:10px;
+    padding:2px 9px; font-size:10px; font-weight:800; color:#fff;
+    border-radius:999px; background:linear-gradient(135deg,#FF8A3D,#F0611F);
+  }
+  .card .arrow{
+    margin-top:8px; font-size:11px; font-weight:700; color:#D98B62;
+  }
+
+  /* ===== 就地展开面板 ===== */
+  .panel-full{ grid-column:1 / -1; animation:pop .26s ease; }
+  @keyframes pop{ from{ opacity:0; transform:translateY(-8px); } to{ opacity:1; transform:translateY(0); } }
+  .panel{
+    border-radius:20px; overflow:hidden;
+    border:2px solid var(--line); background:#fff;
+    box-shadow:var(--shadow);
+  }
+  .p-head{
+    display:flex; align-items:center; gap:10px;
+    padding:13px 18px; color:#fff;
+  }
+  .p-head img{ width:38px; height:38px; display:block; }
+  .p-head b{ font-size:17px; font-weight:900; letter-spacing:1px; }
+  .p-head span{
+    font-size:10px; font-weight:800; padding:3px 9px; border-radius:999px;
+    background:rgba(255,255,255,.26);
+  }
+  .p-head .close{ margin-left:auto; font-size:20px; cursor:pointer; opacity:.85; line-height:1; }
+  .p-head .close:hover{ opacity:1; }
+  .p-body{ padding:6px 16px 14px; }
+  .sblock{ margin-top:12px; }
+  .sub-h{
+    display:flex; align-items:center; gap:8px;
+    padding:8px 0 6px; border-bottom:1px dashed var(--line);
+  }
+  .sub-h b{ font-size:14px; font-weight:900; }
+  .sub-h span{ font-size:10px; color:var(--soft); font-weight:600; }
+  .row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:11px 2px; border-bottom:1px solid #FFF2E7;
+  }
+  .row:last-child{ border-bottom:none; }
+  .row .nm{ font-size:13px; font-weight:700; }
+  .row .right{ display:flex; align-items:center; gap:12px; }
+  .price{ font-size:16px; font-weight:900; color:var(--orange-deep); }
+  .price .u{ font-size:11px; font-weight:700; color:var(--soft); margin-left:2px; }
+  .order-btn{
+    border:none; cursor:pointer; font-family:inherit;
+    padding:7px 18px; font-size:12px; font-weight:800; color:#fff;
+    border-radius:999px; background:linear-gradient(135deg,#FF9A4D,#F0611F);
+    box-shadow:0 4px 10px rgba(240,97,31,.24);
+    transition:transform .15s ease;
+  }
+  .order-btn:active{ transform:scale(.94); }
+
+  .hint{
+    margin:18px 0 6px; text-align:center;
+    font-size:12px; color:var(--soft);
+  }
+
+  /* ===== 会员权益 ===== */
+  .sec-title{
+    margin:34px 0 14px; text-align:center;
+    font-size:19px; font-weight:900; color:#E8541A; letter-spacing:1px;
+  }
+  .benefits{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+  @media (min-width:820px){ .benefits{ grid-template-columns:repeat(4,1fr); } }
+  .b-item{
+    padding:18px 10px; text-align:center;
+    background:#fff; border:2px solid var(--line); border-radius:18px;
+    box-shadow:var(--shadow);
+  }
+  .b-item .e{ font-size:26px; }
+  .b-item b{ display:block; margin-top:6px; font-size:13px; font-weight:900; }
+  .b-item small{ display:block; margin-top:3px; font-size:10px; color:var(--soft); }
+
+  /* ===== 页脚 ===== */
+  .footer{
+    margin-top:30px; padding:24px 20px; text-align:center;
+    color:#fff; border-radius:22px;
+    background:linear-gradient(135deg,#FF9A4D,#F0611F);
+    box-shadow:0 12px 28px rgba(240,97,31,.26);
+  }
+  .footer .f-line{ font-size:14px; font-weight:700; margin:4px 0; }
+  .footer .f-line b{ font-weight:900; }
+  .footer .f-tip{
+    margin-top:12px; padding-top:12px;
+    font-size:10px; color:rgba(255,255,255,.78);
+    border-top:1px solid rgba(255,255,255,.26);
+  }
+
+  /* ===== 弹层 ===== */
+  .mask{
+    position:fixed; inset:0; background:rgba(60,30,15,.42);
+    backdrop-filter:blur(2px); z-index:90;
+  }
+  .sheet{
+    position:fixed; left:50%; bottom:0; transform:translateX(-50%);
+    width:100%; max-width:520px; z-index:100;
+    background:#fff; border-radius:24px 24px 0 0;
+    padding:16px 22px 26px; animation:up .28s ease;
+    box-shadow:0 -10px 34px rgba(80,40,20,.16);
+    max-height:88vh; overflow-y:auto;
+  }
+  @media (min-width:820px){
+    .sheet{ bottom:auto; top:50%; transform:translate(-50%,-50%); border-radius:24px; }
+    @keyframes up{ from{ opacity:0; transform:translate(-50%,-46%); } to{ opacity:1; transform:translate(-50%,-50%); } }
+  }
+  @keyframes up{ from{ transform:translate(-50%,60px); opacity:.4; } to{ transform:translate(-50%,0); opacity:1; } }
+  .bar{ width:44px; height:4px; margin:0 auto 14px; border-radius:2px; background:var(--line); }
+  .sheet-x{
+    position:absolute; top:10px; right:16px;
+    font-size:24px; line-height:1; color:#D3A992; cursor:pointer;
+    padding:4px 8px; border-radius:10px;
+  }
+  .sheet-x:hover{ color:var(--orange-deep); background:#FFF3E9; }
+  .sheet h3{ margin:0 0 12px; text-align:center; font-size:18px; font-weight:900; color:#E8541A; }
+  .o-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:11px 0; border-bottom:1px solid #FFF2E7; font-size:14px;
+  }
+  .o-row .k{ font-weight:700; color:var(--soft); }
+  .o-row .v{ font-weight:800; text-align:right; max-width:64%; }
+  .o-row .v.acc{ color:var(--orange-deep); font-size:16px; font-weight:900; }
+
+  /* 客服二维码 */
+  .qr-box{
+    width:220px; height:220px; margin:6px auto 16px;
+    border-radius:18px; overflow:hidden; position:relative;
+    background:#FFF6EE; border:2px dashed var(--line);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .qr-box img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .qr-missing{
+    display:none; flex-direction:column; align-items:center; justify-content:center;
+    width:100%; height:100%; text-align:center;
+    font-size:13px; font-weight:800; color:var(--soft); line-height:1.8;
+  }
+  .qr-missing small{ font-size:10px; font-weight:600; color:#C9A796; }
+  .tip{ margin-top:10px; font-size:11px; line-height:1.7; color:var(--soft); }
+  .actions{ display:flex; gap:12px; margin-top:18px; }
+  .actions .btn{ flex:1; padding:13px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- 头部 -->
+  <div class="hero">
+    <div class="logo-ring"><img src="logo.png" alt="汇享玩电竞"></div>
+    <h1>汇享玩电竞</h1>
+    <div class="sub">HUIXIANGWAN E-SPORTS · 陪玩价目表</div>
+    <div class="welcome">欢迎板板光临汇享玩 ♥ 端游手游均有 · 护航 / 培玩 / 趣味全天在线</div>
+    <div class="hero-btns">
+      <button class="btn btn-main" onclick="document.querySelector('.grid').scrollIntoView({behavior:'smooth',block:'start'})">查看价目</button>
+      <button class="btn btn-ghost" onclick="openContact()">联系客服</button>
+    </div>
+  </div>
+
+  <!-- 横幅 -->
+  <div class="banners">
+    <div class="banner">🎉 近期上新玩法 <small>新玩法持续更新</small></div>
+    <div class="banner alt">👑 VIP 预存及礼物表 <small>预存有礼 · 会员价</small></div>
+  </div>
+
+  <!-- 分类网格 -->
+  <div class="grid" id="grid"></div>
+  <div class="hint">👆 点击分类卡片，价目就在这一排卡片下方就地展开；点「下单」弹出客服二维码</div>
+
+  <!-- 会员权益 -->
+  <div class="sec-title">会员权益</div>
+  <div class="benefits">
+    <div class="b-item"><div class="e">🎁</div><b>预存送时长</b><small>存得越多送得越多</small></div>
+    <div class="b-item"><div class="e">🎂</div><b>生日专属折扣</b><small>生日当天享特惠</small></div>
+    <div class="b-item"><div class="e">⚡</div><b>优先派单</b><small>热门时段优先安排</small></div>
+    <div class="b-item"><div class="e">💎</div><b>会员专属玩法</b><small>解锁独家福利</small></div>
+  </div>
+
+  <!-- 页脚 -->
+  <div class="footer">
+    <div class="f-line">抖音：<b>蜂医板板</b></div>
+    <div class="f-line">营业时间：<b>全天</b></div>
+    <div class="f-tip">本店仅提供游戏陪玩服务，不涉及任何违规内容</div>
+  </div>
+
+</div>
+
+<!-- 弹层容器 -->
+<div id="modal"></div>
+
+<script>
+/* ===================== 数据 ===================== */
+var CATS = [
+  { id:'escort', name:'护航价目', desc:'机密 / 绝密', corner:'', tag:'机密 / 绝密', theme:1,
+    subs:[
+      { title:'🔒 机密护航', note:'适合熟图 · 氛围轻松', items:[
+        { name:'体验单', price:'--', unit:'/ 局' },
+        { name:'进阶单', price:'--', unit:'/ 局' },
+        { name:'包夜单', price:'--', unit:'/ 晚' }
+      ]},
+      { title:'🛡️ 绝密护航', note:'沉浸式体验 · 情绪价值拉满', items:[
+        { name:'体验单', price:'--', unit:'/ 局' },
+        { name:'进阶单', price:'--', unit:'/ 局' },
+        { name:'包夜单', price:'--', unit:'/ 晚' }
+      ]}
+    ]},
+  { id:'play', name:'培玩价目', desc:'按小时计', corner:'', tag:'按小时计', theme:2,
+    subs:[{ title:'🎮 娱乐培玩', note:'不限段位', items:[
+      { name:'1 小时', price:'--', unit:'元' },
+      { name:'3 小时', price:'--', unit:'元' },
+      { name:'包天', price:'--', unit:'元' }
+    ]}]},
+  { id:'hot', name:'热门趣味', desc:'本周热卖', corner:'热', tag:'本周热卖', theme:3,
+    subs:[{ title:'🔥 热门玩法', note:'本周热卖', items:[
+      { name:'玩法一', price:'--', unit:'元' },
+      { name:'玩法二', price:'--', unit:'元' }
+    ]}]},
+  { id:'past', name:'往期趣味', desc:'往期玩法', corner:'', tag:'往期玩法', theme:4,
+    subs:[{ title:'🕹️ 往期合集', note:'往期玩法', items:[
+      { name:'玩法一', price:'--', unit:'元' },
+      { name:'玩法二', price:'--', unit:'元' }
+    ]}]},
+  { id:'star', name:'人气明星', desc:'人气陪陪', corner:'', tag:'人气陪陪', theme:1,
+    subs:[{ title:'⭐ 人气档', note:'按小时计', items:[
+      { name:'1 小时', price:'--', unit:'元' },
+      { name:'3 小时', price:'--', unit:'元' }
+    ]}]},
+  { id:'val', name:'无畏契约', desc:'VALORANT', corner:'', tag:'段位陪玩', theme:2,
+    subs:[{ title:'🎯 段位陪玩', note:'按局计', items:[
+      { name:'1 局', price:'--', unit:'元' },
+      { name:'3 局', price:'--', unit:'元' }
+    ]}]},
+  { id:'casual', name:'休闲游戏', desc:'轻松开黑', corner:'', tag:'轻松开黑', theme:3,
+    subs:[{ title:'🎲 娱乐局', note:'按小时计', items:[
+      { name:'1 小时', price:'--', unit:'元' },
+      { name:'3 小时', price:'--', unit:'元' }
+    ]}]},
+  { id:'naraka', name:'永劫无间', desc:'刀锋起舞', corner:'', tag:'段位陪玩', theme:4,
+    subs:[{ title:'⚔️ 段位陪玩', note:'按局计', items:[
+      { name:'1 局', price:'--', unit:'元' },
+      { name:'3 局', price:'--', unit:'元' }
+    ]}]},
+  { id:'excl', name:'独家趣味', desc:'独家玩法', corner:'', tag:'独家玩法', theme:1,
+    subs:[{ title:'💎 独家玩法', note:'专属定制', items:[
+      { name:'玩法一', price:'--', unit:'元' },
+      { name:'玩法二', price:'--', unit:'元' }
+    ]}]},
+  { id:'zhubo', name:'主播同款', desc:'主播同款', corner:'', tag:'主播同款', theme:2,
+    subs:[{ title:'📺 主播同款', note:'同款玩法', items:[
+      { name:'1 小时', price:'--', unit:'元' },
+      { name:'3 小时', price:'--', unit:'元' }
+    ]}]},
+  { id:'vip', name:'会员专属', desc:'会员专享', corner:'VIP', tag:'会员专享', theme:3,
+    subs:[{ title:'👑 会员档', note:'预存办卡更划算', items:[
+      { name:'预存档', price:'--', unit:'元' },
+      { name:'包月档', price:'--', unit:'元' }
+    ]}]},
+  { id:'entertain', name:'娱乐专属', desc:'欢乐开黑', corner:'', tag:'娱乐专属', theme:4,
+    subs:[{ title:'🎉 娱乐档', note:'按小时计', items:[
+      { name:'1 小时', price:'--', unit:'元' },
+      { name:'3 小时', price:'--', unit:'元' }
+    ]}]}
+];
+
+var WORKTIME = '全天';
+
+/* ===================== 渲染卡片 ===================== */
+var grid = document.getElementById('grid');
+
+CATS.forEach(function(c){
+  var card = document.createElement('div');
+  card.className = 'card';
+  card.dataset.id = c.id;
+  card.innerHTML =
+    (c.corner ? '<div class="corner">' + c.corner + '</div>' : '') +
+    '<img class="ico" src="icons/' + c.id + '.png" alt="' + c.name + '">' +
+    '<div class="nm">' + c.name + '</div>' +
+    '<div class="ds">' + c.desc + '</div>' +
+    '<div class="arrow">点击展开 ▾</div>';
+  card.addEventListener('click', function(){
+    toggle(c.id);
+  });
+  grid.appendChild(card);
+});
+
+/* ===================== 就地展开 ===================== */
+var activeId = '';
+
+function colCount(){
+  var cols = getComputedStyle(grid).gridTemplateColumns;
+  return cols.split(' ').filter(Boolean).length || 2;
+}
+
+function clearPanel(){
+  var old = grid.querySelector('.panel-full');
+  if(old) old.parentNode.removeChild(old);
+}
+
+function toggle(id){
+  if(activeId === id){
+    activeId = '';
+    clearPanel();
+    refreshActive();
+    return;
+  }
+  activeId = id;
+  renderPanel();
+  refreshActive();
+}
+
+function refreshActive(){
+  grid.querySelectorAll('.card').forEach(function(el){
+    el.classList.toggle('active', el.dataset.id === activeId);
+  });
+}
+
+function renderPanel(){
+  clearPanel();
+  if(!activeId) return;
+
+  var c = CATS.filter(function(x){ return x.id === activeId; })[0];
+  if(!c) return;
+
+  var cards = Array.prototype.slice.call(grid.querySelectorAll('.card'));
+  var idx = cards.findIndex(function(el){ return el.dataset.id === activeId; });
+  var cols = colCount();
+  var rowEnd = Math.min(Math.floor(idx / cols) * cols + cols - 1, cards.length - 1);
+  var anchor = cards[rowEnd];
+
+  var wrapEl = document.createElement('div');
+  wrapEl.className = 'panel-full';
+
+  var body = '';
+  c.subs.forEach(function(s){
+    body += '<div class="sblock"><div class="sub-h"><b>' + s.title + '</b><span>' + s.note + '</span></div>';
+    s.items.forEach(function(it){
+      body +=
+        '<div class="row">' +
+          '<div class="nm">' + it.name + '</div>' +
+          '<div class="right">' +
+            '<div class="price">' + it.price + '<span class="u"> ' + it.unit + '</span></div>' +
+            '<button class="order-btn" data-cate="' + c.name + '" data-sub="' + s.title + '" data-name="' + it.name + '" data-price="' + it.price + '" data-unit="' + it.unit + '">下单</button>' +
+          '</div>' +
+        '</div>';
+    });
+    body += '</div>';
+  });
+
+  wrapEl.innerHTML =
+    '<div class="panel">' +
+      '<div class="p-head t' + c.theme + '">' +
+        '<img src="icons/' + c.id + '.png" alt="">' +
+        '<b>' + c.name + '</b>' +
+        '<span>' + c.tag + '</span>' +
+        '<div class="close" onclick="toggle(\'' + c.id + '\')">×</div>' +
+      '</div>' +
+      '<div class="p-body">' + body + '</div>' +
+    '</div>';
+
+  anchor.parentNode.insertBefore(wrapEl, anchor.nextSibling);
+
+  wrapEl.querySelectorAll('.order-btn').forEach(function(btn){
+    btn.addEventListener('click', function(ev){
+      ev.stopPropagation();
+      openQr(btn.dataset);
+    });
+  });
+
+  if(wrapEl.getBoundingClientRect().top > window.innerHeight - 80){
+    wrapEl.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+}
+
+window.addEventListener('resize', function(){
+  if(activeId) renderPanel();
+});
+
+/* ===================== 下单：弹出客服二维码 ===================== */
+var modal = document.getElementById('modal');
+
+function openQr(d){
+  var hasItem = !!(d && d.cate);
+  var itemRow = hasItem
+    ? '<div class="o-row"><div class="k">所选项目</div><div class="v">' + d.cate + ' · ' + d.name + '</div></div>'
+    : '';
+  var tip = hasItem
+    ? '扫码添加客服，发送「' + d.cate + ' · ' + d.name + '」并付款，客服确认后为你安排。'
+    : '扫码添加客服，客服会为你安排。';
+
+  modal.innerHTML =
+    '<div class="mask" onclick="closeModal()"></div>' +
+    '<div class="sheet">' +
+      '<div class="bar"></div>' +
+      '<div class="sheet-x" onclick="closeModal()">×</div>' +
+      '<h3>扫码联系客服</h3>' +
+      '<div class="qr-box">' +
+        '<img src="qr.png" alt="客服二维码">' +
+        '<div class="qr-missing" id="qrFallback">客服二维码待上传<br><small>把 qr.png 放到 index.html 同目录即可</small></div>' +
+      '</div>' +
+      itemRow +
+      '<div class="o-row"><div class="k">营业时间</div><div class="v">' + WORKTIME + '</div></div>' +
+      '<div class="tip">' + tip + '</div>' +
+      '<div class="actions">' +
+        '<button class="btn btn-main" onclick="closeModal()">关闭</button>' +
+      '</div>' +
+    '</div>';
+
+  var img = modal.querySelector('.qr-box img');
+  var fb = document.getElementById('qrFallback');
+  function showFallback(){
+    img.style.display = 'none';
+    fb.style.display = 'flex';
+  }
+  if(img.complete && img.naturalWidth === 0){
+    showFallback();
+  } else {
+    img.addEventListener('error', showFallback);
+  }
+}
+
+function closeModal(){
+  modal.innerHTML = '';
+}
+
+/* ===================== 联系客服 ===================== */
+function openContact(){
+  openQr(null);
+}
+
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') closeModal();
+});
+</script>
+
+<style>
+  /* 4 套暖色渐变（展开面板标题栏） */
+  .t1{ background:linear-gradient(135deg,#FF9A4D,#F0611F); }
+  .t2{ background:linear-gradient(135deg,#FFB347,#EE7A1B); }
+  .t3{ background:linear-gradient(135deg,#FF8163,#E8503A); }
+  .t4{ background:linear-gradient(135deg,#FFC46B,#EFA02E); }
+</style>
+</body>
+</html>
